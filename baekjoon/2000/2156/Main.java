@@ -5,6 +5,7 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) throws IOException {
@@ -25,17 +26,24 @@ public class Main {
             bw.flush();
             bw.close();
             return;
+        } else if(size == 3){
+            Arrays.sort(array);
+            bw.write((array[array.length - 1] + array[array.length - 2]) + "\n");
         }
         int result = 0;
-        int[] dp = new int[size + 1];
-        dp[1] = array[0];
-        dp[2] = array[0] + array[1];
-        for (int i = 3; i < dp.length; i++) {
-            dp[i] = Integer.max(dp[i - 2], dp[i - 3] + array[i - 2]) + array[i - 1];
+        int[] dp = new int[size + 2];
+        dp[2] = array[0];
+        dp[3] = array[0] + array[1];
+        for (int i = 4; i < dp.length; i++) {
+            dp[i] =  Integer.max(dp[i - 4] + array[i - 3] + array[i - 2],Integer.max(dp[i - 3] + array[i - 3] + array[i - 2], dp[i - 2] + array[i - 2]));
             if(dp[i] > result){
                 result = dp[i];
             }
         }
+        for (int i = 0; i < dp.length; i++) {
+            System.out.print(dp[i] + " ");
+        }
+        System.out.println();
         bw.write(result + "\n");
         bw.flush();
         bw.close();

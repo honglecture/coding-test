@@ -14,10 +14,12 @@ public class Main {
         long[] array = new long[1001];
         array[1] = 1;
         array[2] = 3;
-        array[3] = 6;
+        array[3] = 5;
+        int count = 2;
         for (int i = 4; i < array.length; i++) {
-            array[i] = array[i - 2] + array[i - 1];
+            array[i] = array[i - 2] + array[i - 1] + count;
             array[i] = array[i] % 10007;
+            count++;
         }
         bw.write(array[n] + "\n");
         bw.flush();
