@@ -14,10 +14,25 @@ public class Main {
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         int n = Integer.parseInt(bf.readLine());
         long sum = 1;
+        int count = 0;
         for (long i = 1; i <= n; i++) {
             sum *= i;
+            while(true){
+                String s = sum + "";
+                if(s.charAt(s.length() - 1) == '0'){
+                    sum /= 10;
+                    count++;
+                } else {
+                    break;
+                }
+            }
+            String s = sum + "";
+            if(s.length() > 5){
+                s = s.substring(s.length() - 5);
+            }
+            sum = Long.parseLong(s);
         }
-        System.out.println(sum);
+        bw.write(count+"\n");
         bw.flush();
         bw.close();
     }
