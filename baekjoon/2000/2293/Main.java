@@ -18,19 +18,12 @@ public class Main {
             array[i] = Integer.parseInt(bf.readLine());
         }
         int[] dp = new int[sum + 1];
+        dp[0] = 1;
         for (int i = 0; i < array.length; i++) {
             int n = array[i];
-            dp[n] = n;
-        }
-        
-        for (int i = 2; i < dp.length; i++) {
-            for (int j = 1; j < i; j++) {
-                int result = dp[i - j] + dp[j];
-                dp[i] = Integer.max(dp[i], result);
+            for (int j = n; j < dp.length; j++) {
+                dp[j] = dp[j] + dp[j - n];
             }
-        }
-        for (int i = 0; i < dp.length; i++) {
-            System.out.println(dp[i]);
         }
         bw.write(dp[sum] + "\n");
         bw.flush();
