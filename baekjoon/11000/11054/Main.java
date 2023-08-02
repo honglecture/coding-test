@@ -14,61 +14,29 @@ public class Main {
         }
         int[] ldp = new int[size];
         int[] rdp = new int[size];
-        int[] dp = new int[10001];
         for (int i = 0; i < ldp.length; i++) {
             ldp[i] = 1;
+            for (int j = 0; j < i; j++) {
+                if(array[i] > array[j]){
+                    ldp[i] = Math.max(ldp[j] + 1, ldp[i]);
+                }
+            }
+        }
+        for (int i = rdp.length - 1; i >= 0; i--) {
             rdp[i] = 1;
-        }
-        for (int i = 0; i < dp.length; i++) {
-            dp[i] = 1;
-        }
-        for (int i = 0; i < array.length; i++) {
-            int n1 = array[i];
-            int count = ldp[i];
-            for (int j = i + 1; j < array.length; j++) {
-                int n2 = array[j];
-                if(n2 > n1){
-                    ldp[j] = count + 1;
-                    dp[n1] = ldp[j];
-                } else  {
-                    ldp[j] = dp[n1];
-                    break;
+            for (int j = rdp.length - 1; i < j; j--) {
+                if(array[i] > array[j]){
+                    rdp[i] = Math.max(rdp[j] + 1, rdp[i]);
                 }
             }
         }
-        dp = new int[10001];
-        for (int i = 0; i < dp.length; i++) {
-            dp[i] = 1;
-        }
-        for (int i = array.length - 1; i >= 0; i--) {
-            int n1 = array[i];
-            int count = rdp[i];
-            for (int j = i - 1; j >= 0; j--) {
-                int n2 = array[j];
-                if(n2 > n1){
-                    rdp[j] = count + 1;
-                    dp[n1] = rdp[j];
-                } else  {
-                    rdp[j] = dp[n1];
-                    break;
-                }
-            }
-        }
-        for (int i = 0; i < ldp.length; i++) {
-            int sum = ldp[i] + rdp[i];
-            if(answer < sum){
+        for (int i = 0; i < rdp.length; i++) {
+            int sum = rdp[i] + ldp[i];
+            if(sum > answer){
                 answer = sum;
             }
         }
-        for (int i = 0; i < ldp.length; i++) {
-            System.out.print(ldp[i]);
-        }
-        System.out.println();
-        for (int i = 0; i < rdp.length; i++) {
-            System.out.print(rdp[i]);
-        }
-        System.out.println();
-        bw.write(answer + "\n");
+        bw.write(answer - 1 + "\n");
         bw.flush();
         bw.close();
     }
