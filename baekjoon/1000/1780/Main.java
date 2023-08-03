@@ -27,6 +27,9 @@ public class Main {
             }
         }
         getAnswer(0, 0, size);
+        for (int i = 0; i < answerArray.length; i++) {
+            bw.write(answerArray[i] + "\n");
+        }
         bw.flush();
         bw.close();
     }
@@ -35,19 +38,33 @@ public class Main {
         Set<Integer> set = new HashSet<>();
         for (int i = startY; i < startY + size; i++) {
             for (int j = startX; j < startX + size; j++) {
-                set.add(array[startY][startX]);
+                set.add(array[i][j]);
             }
         }
         if(set.size() == 1){
             int n = set.iterator().next();
-            answerArray[n + 1] += (size * size);
+            answerArray[n + 1] += 1;
             return;
         }
-
-        
-        
-
+        size = size / 3;
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                set = new HashSet<>();
+                for (int k = startY + (size * i); k < startY + (size * (i + 1)); k++) {
+                    for (int l = startX + (size * j); l < startX + (size * (j + 1)); l++) {
+                        set.add(array[k][l]);
+                    }
+                }
+                if(set.size() == 1){
+                    int n = set.iterator().next();
+                    answerArray[n + 1] += 1;
+                } else {
+                    getAnswer(startY + (size * i), startX + (size * j), size);
+                }
+            }
+        }        
     }
-
 }
+
+
 
