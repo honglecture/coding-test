@@ -1,10 +1,15 @@
 // https://www.acmicpc.net/problem/1197
 // 최소 스패닝 트리
 import java.io.*;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.PriorityQueue;
+import java.util.Queue;
 public class Main {
 
     public static void main(String[] args) throws IOException {
@@ -35,10 +40,42 @@ public class Main {
             costMap.put(n1 + " " + n2, cost);
             costMap.put(n2 + " " + n1, cost);
         }
-
-        System.out.println(pathMap);
-        System.out.println(costMap);
-
+        int[] visitArray = new int[size1 + 1];
+        Queue<int[]> queue = new PriorityQueue<>(new Comparator<int[]>() {
+            @Override
+            public int compare(int[] o1, int[] o2) {
+                if(o1[1] < o2[1]){
+                    return -1;
+                } else if(o1[1] > o2[1]){
+                    return 1;
+                } else {
+                    return 0;
+                }
+            }
+        });
+        queue.add(new int[]{1, 0});
+        while(queue.size() != 0){
+            int[] pollArray = queue.poll();
+            int currentNum = pollArray[0];
+            int currentCost = pollArray[1];
+            if(currentNum != 1 && visitArray[currentNum] != 0){
+                continue;
+            }
+            visitArray[currentNum] = currentCost;
+            List<Integer> nextList = pathMap.get(currentNum);
+            for (int i = 0; i < nextList.size(); i++) {
+                int nextNum = nextList.get(i);
+                if(currentNum != 1 && visitArray[nextNum] != 0){
+                    continue;
+                }
+                queue.add(new int[]{nextNum, costMap.get(currentNum + " " + nextNum)});
+            }
+        }
+        int sum = 0;
+        for (int i = 2; i < visitArray.length; i++) {
+            sum += visitArray[i];
+        }
+        bw.write(sum + "\n");
         bw.flush();
         bw.close();
     }
