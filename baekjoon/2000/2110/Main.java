@@ -21,14 +21,35 @@ public class Main {
         Arrays.sort(array);
         int start = 0;
         int end = array[array.length - 1];
+        int answer = 0;
         while(true){
-            int mid = (start + end) / 2;
-            int result = mid - 1;
-            for (int i = 1; i < array.length; i++) {
-                
+            if(start > end){
+                break;
             }
-            break;
+            int mid = (start + end) / 2;
+            int currentN = array[0];
+            int currentCount = count - 1;
+            for (int i = 1; i < array.length; i++) {
+                int nextN = array[i];
+                if(nextN - currentN >= mid){
+                    currentCount--;
+                    currentN  = nextN;
+                }
+                if(currentCount == -1){
+                    break;
+                }
+            }
+            if(currentCount > 0){
+                end = mid - 1;
+            } else if(currentCount == 0){
+                start = mid + 1;
+                answer = mid;
+            } else {
+                start = mid + 1;
+                answer = mid;
+            }
         }
+        bw.write(answer + "\n");
         bw.flush();
         bw.close();
     }
