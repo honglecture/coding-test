@@ -25,6 +25,152 @@ public class Main {
         bw.close();
     }
 
+    private static void test(int type){
+        int[][] copyArray = getCopyArray(array);
+        int[][] nextArray = new int[array.length][array.length];
+        if(type == 0){
+            for (int j = 0; j < array.length; j++) {
+                Queue<Integer> queue = new ArrayDeque<>();
+                for (int k = 0; k < array.length; k++) {
+                    if(array[k][j] != 0){
+                        queue.add(array[k][j]);
+                    }
+                }
+                int index = 0;
+                if(queue.size() == 0){
+                    continue;
+                }
+                int currentN = queue.poll();
+                if(queue.size() == 0){
+                    nextArray[index][j] = currentN;
+                    continue;
+                }
+                while(queue.size() != 0){
+                    int nextN = queue.poll();
+                    if(currentN == nextN){
+                        nextArray[index++][j] = currentN + currentN;
+                        currentN = 0;
+                    } else {
+                        if(currentN == 0){
+                            currentN = nextN;
+                        } else {
+                            nextArray[index++][j] = currentN;
+                            currentN = nextN;
+                        }
+                    }
+                }
+                if(currentN != 0){
+                    System.out.println(index);
+                    nextArray[index][j] = currentN;
+                }
+            }
+        } else if(type == 1){
+            for (int j = 0; j < array.length; j++) {
+                Queue<Integer> queue = new ArrayDeque<>();
+                for (int k = array.length - 1; k >= 0; k--) {
+                    if(array[j][k] != 0){
+                        queue.add(array[j][k]);
+                    }
+                }
+                int index = array.length - 1;
+                if(queue.size() == 0){
+                    continue;
+                }
+                int currentN = queue.poll();
+                if(queue.size() == 0){
+                    nextArray[j][index] = currentN;
+                    continue;
+                }
+                while(queue.size() != 0){
+                    int nextN = queue.poll();
+                    if(currentN == nextN){
+                        nextArray[j][index--] = currentN + currentN;
+                        currentN = 0;
+                    } else {
+                        if(currentN == 0){
+                            currentN = nextN;
+                        } else {
+                            nextArray[j][index--] = currentN;
+                            currentN = nextN;
+                        }
+                    }
+                }
+                if(currentN != 0){
+                    nextArray[j][index] = currentN;
+                }
+            }
+        } else if(type == 2){
+            for (int j = 0; j < array.length; j++) {
+                Queue<Integer> queue = new ArrayDeque<>();
+                for (int k = array.length - 1; k >= 0; k--) {
+                    if(array[k][j] != 0){
+                        queue.add(array[k][j]);
+                    }
+                }
+                int index = array.length - 1;
+                if(queue.size() == 0){
+                    continue;
+                }
+                int currentN = queue.poll();
+                if(queue.size() == 0){
+                    nextArray[index][j] = currentN;
+                    continue;
+                }
+                while(queue.size() != 0){
+                    int nextN = queue.poll();
+                    if(currentN == nextN){
+                        nextArray[index--][j] = currentN + currentN;
+                        currentN = 0;
+                    } else {
+                        nextArray[index--][j] = currentN;
+                        currentN = nextN;
+                    }
+                }
+                if(currentN != 0){
+                    nextArray[index][j] = currentN;
+                }
+            }
+        } else {
+            for (int j = 0; j < array.length; j++) {
+                Queue<Integer> queue = new ArrayDeque<>();
+                for (int k = 0; k < array.length; k++) {
+                    if(array[j][k] != 0){
+                        queue.add(array[j][k]);
+                    }
+                }
+                int index = 0;;
+                if(queue.size() == 0){
+                    continue;
+                }
+                int currentN = queue.poll();
+                if(queue.size() == 0){
+                    nextArray[j][index] = currentN;
+                    continue;
+                }
+                while(queue.size() != 0){
+                    int nextN = queue.poll();
+                    if(currentN == nextN){
+                        nextArray[j][index++] = currentN + currentN;
+                        currentN = 0;
+                    } else {
+                        nextArray[j][index++] = currentN;
+                        currentN = nextN;
+                    }
+                }
+                if(currentN != 0){
+                    nextArray[j][index] = currentN;
+                }
+            }
+        }
+        for (int i = 0; i < nextArray.length; i++) {
+            for (int j = 0; j < nextArray.length; j++) {
+                System.out.print(nextArray[i][j] + " ");
+            }
+            System.out.println();
+        }
+        System.out.println();
+    }
+
     private static void getAnswer(int count){
         if(count == 5){
             for (int i = 0; i < array.length; i++) {
@@ -69,8 +215,12 @@ public class Main {
                             nextArray[index++][j] = currentN + currentN;
                             currentN = 0;
                         } else {
-                            nextArray[index++][j] = currentN;
-                            currentN = nextN;
+                            if(currentN == 0){
+                                currentN = nextN;
+                            } else {
+                                nextArray[index++][j] = currentN;
+                                currentN = nextN;
+                            }
                         }
                     }
                     if(currentN != 0){
@@ -100,8 +250,12 @@ public class Main {
                             nextArray[j][index--] = currentN + currentN;
                             currentN = 0;
                         } else {
-                            nextArray[j][index--] = currentN;
-                            currentN = nextN;
+                            if(currentN == 0){
+                                currentN = nextN;
+                            } else {
+                                nextArray[j][index--] = currentN;
+                                currentN = nextN;
+                            }
                         }
                     }
                     if(currentN != 0){
@@ -131,8 +285,12 @@ public class Main {
                             nextArray[index--][j] = currentN + currentN;
                             currentN = 0;
                         } else {
-                            nextArray[index--][j] = currentN;
-                            currentN = nextN;
+                            if(currentN == 0){
+                                currentN = nextN;
+                            } else {
+                                nextArray[index--][j] = currentN;
+                                currentN = nextN;
+                            }
                         }
                     }
                     if(currentN != 0){
@@ -162,8 +320,12 @@ public class Main {
                             nextArray[j][index++] = currentN + currentN;
                             currentN = 0;
                         } else {
-                            nextArray[j][index++] = currentN;
-                            currentN = nextN;
+                            if(currentN == 0){
+                                currentN = nextN;
+                            } else {
+                                nextArray[j][index++] = currentN;
+                                currentN = nextN;
+                            }
                         }
                     }
                     if(currentN != 0){
