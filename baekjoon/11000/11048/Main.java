@@ -14,7 +14,7 @@ public class Main {
             for (int j = 0; j < sArray.length; j++) {
                 array[i][j] = Integer.parseInt(sArray[j]);
             }
-        }
+        } 
         int[][] dp = new int[array.length][array[0].length];
         bw.flush();
         bw.close();
