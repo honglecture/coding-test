@@ -12,22 +12,47 @@ public class Main {
         for (int i = 0; i < array.length; i++) {
             array[i] = Integer.parseInt(sArray[i]);
         }
-        int[] dp = new int[size];
-        for (int i = 0; i < array.length; i++) {
-            for (int j = i + 1; j < array.length; j++) {
-                if(array[i] < array[j]){
-                    dp[j] = Integer.max(dp[j], dp[i] + 1);
-                }
+        int[] dp = new int[size + 1];
+        int dpIndex = 1;
+        dp[0] = array[0];
+        for (int i = 1; i < array.length; i++) {
+            int n = array[i];
+            if(dp[dpIndex - 1] < n){
+                dp[dpIndex++] = array[i];
+            } else {
+                change(dp, array, n, dpIndex - 1);
             }
         }
-        int max = 0;
+        bw.write(dpIndex + "\n");
         for (int i = 0; i < dp.length; i++) {
-            if(dp[i] > max){
-                max = dp[i];
-            }
+            bw.write(dp[i] + " ");
         }
-        bw.write(max + 1 + "\n");
+        bw.write("\n");
         bw.flush();
         bw.close();
+        // 10 20 30 15 20 30 50 40 45 60
+    }
+    private static void change(int[] dp, int[] array, int n, int endIndex){
+        int start = 0;
+        int end = endIndex;
+        int resultIndex = -1;
+        int currentNum = Integer.MAX_VALUE;
+        while(true){
+            if(start > end){
+                break;
+            }
+            int mid = (start + end) / 2;
+            int nextNum = dp[mid];
+            if(nextNum < n){
+                start = mid + 1;
+            } else {
+                if(currentNum > nextNum){
+                    currentNum = nextNum;
+                    resultIndex = mid;
+                }
+                end = mid - 1;
+            }
+        }
+        dp[resultIndex] = n;
     }
 }
