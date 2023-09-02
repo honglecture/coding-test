@@ -7,14 +7,15 @@ public class Main {
         BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         String[] sArray = bf.readLine().split(" ");
-        int[] array1 = {0, 0, 0, -1, 1};
-        int[] array2 = {0, 1, -1, 0, 0};
         int y = Integer.parseInt(sArray[0]);
         int x = Integer.parseInt(sArray[1]);
+        int[] array1 = {0, 0, 0, -1, 1};
+        int[] array2 = {0, 1, -1, 0, 0};
         int startY = Integer.parseInt(sArray[2]);
         int startX = Integer.parseInt(sArray[3]);
-        int currentN = 1; // 윗면 
-        int[] diceArray = new int[7];
+        int frontIndex = 3; // 윗면 
+        int backIndex = 6; // 뒷면
+        int[] diceArray = {0, 0, 0, 0, 0, 0, 0};
         int[][] array = new int[y][x];
         for (int i = 0; i < array.length; i++) {
             sArray = bf.readLine().split(" ");
@@ -25,100 +26,43 @@ public class Main {
         sArray = bf.readLine().split(" ");
         for (int i = 0; i < sArray.length; i++) {
             int order = Integer.parseInt(sArray[i]);
+            // 동쪽은 1, 서쪽은 2, 북쪽은 3, 남쪽은 4
             int nextY = startY + array1[order];
             int nextX = startX + array2[order];
-            int nextN = 0;
-            int bottomN = 0;
             if(nextY < 0 || nextX < 0 || nextY > array.length - 1 || nextX > array[0].length - 1){
                 continue;
             }
-            if(currentN == 1){
-                if(order == 1){
-                    nextN = 4;
-                } else if(order == 2){
-                    nextN = 3;
-                } else if(order == 3){
-                    nextN = 5;
-                } else if(order == 4){
-                    nextN = 2;
-                }
-            } else if(currentN == 2){
-                if(order == 1){
-                    nextN = 4;
-                } else if(order == 2){
-                    nextN = 3;
-                } else if(order == 3){
-                    nextN = 1;
-                } else if(order == 4){
-                    nextN = 6;
-                }
-            } else if(currentN == 3){
-                if(order == 1){
-                    nextN = 1;
-                } else if(order == 2){
-                    nextN = 6;
-                } else if(order == 3){
-                    nextN = 5;
-                } else if(order == 4){
-                    nextN = 2;
-                }
-            } else if(currentN == 4){
-                if(order == 1){
-                    nextN = 6;
-                } else if(order == 2){
-                    nextN = 1;
-                } else if(order == 3){
-                    nextN = 2;
-                } else if(order == 4){
-                    nextN = 5;
-                }
-            } else if(currentN == 5){
-                if(order == 1){
-                    nextN = 3;
-                } else if(order == 2){
-                    nextN = 4;
-                } else if(order == 3){
-                    nextN = 6;
-                } else if(order == 4){
-                    nextN = 1;
-                }
-            } else if(currentN == 6){
-                if(order == 1){
-                    nextN = 3;
-                } else if(order == 2){
-                    nextN = 4;
-                } else if(order == 3){
-                    nextN = 2;
-                } else if(order == 4){
-                    nextN = 5;
-                }
+            int temp = diceArray[frontIndex];
+            if(order == 1){
+                diceArray[3] = diceArray[4];
+                diceArray[4] = diceArray[6];
+                diceArray[6] = diceArray[2];
+                diceArray[2] = temp;
+            } else if(order == 2){
+                diceArray[3] = diceArray[2];
+                diceArray[2] = diceArray[6];
+                diceArray[6] = diceArray[4];
+                diceArray[4] = temp;
+            } else if(order == 3){
+                diceArray[3] = diceArray[5];
+                diceArray[5] = diceArray[6];
+                diceArray[6] = diceArray[1];
+                diceArray[1] = temp;
+            } else if(order == 4){
+                diceArray[3] = diceArray[1];
+                diceArray[1] = diceArray[6];
+                diceArray[6] = diceArray[5];
+                diceArray[5] = temp;
             }
-            
-            if(nextN == 1){
-                bottomN = 6;
-            } else if(nextN == 2){
-                bottomN = 5;
-            } else if(nextN == 3){
-                bottomN = 4;
-            } else if(nextN == 4){
-                bottomN = 3;
-            } else if(nextN == 5){
-                bottomN = 2;
-            } else if(nextN == 6){
-                bottomN = 1;
+            if(array[nextY][nextX] == 0){
+                array[nextY][nextX] = diceArray[backIndex];
+            } else {
+                diceArray[backIndex] = array[nextY][nextX];
+                array[nextY][nextX] = 0;
             }
-            int temp = array[nextY][nextX];
-            array[nextY][nextX] = diceArray[bottomN];
-            diceArray[bottomN] = temp;
-            currentN = nextN;
             startY = nextY;
             startX = nextX;
-            bw.write(diceArray[nextN] + "\n");
-            System.out.println(nextN);
-            for (int index = 1; index < diceArray.length; index++) {
-                System.out.print(diceArray[index] + " ");
-            }
-            System.out.println();
+            bw.write(diceArray[frontIndex] + "\n");
         }
         bw.flush();
         bw.close();
