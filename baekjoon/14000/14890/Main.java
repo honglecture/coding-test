@@ -11,6 +11,7 @@ public class Main {
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         String[] sArray = bf.readLine().split(" ");
         int size = Integer.parseInt(sArray[0]);
+        l = Integer.parseInt(sArray[1]);
         int[][] array = new int[size][size];
         int count = 0;
         for (int i = 0; i < array.length; i++) {
@@ -42,19 +43,64 @@ public class Main {
 
     private static int getAnswer(int[] subArray){
         int result = 1;
-        int startIndex = 0;
+        int startIndex = 1;
+        boolean[] visitArray = new boolean[subArray.length];
+        for (int i = 0; i < subArray.length - 1; i++) {
+            int n1 = subArray[i];
+            int n2 = subArray[i + 1];
+            if(Math.abs(n1 - n2) > 1){
+                result = 0;
+                break;
+            }
+        }
+        if(result == 0){
+            return result;
+        }
         while(true){
-            int currentNum = subArray[startIndex];
-            int nextNum = subArray[startIndex + 1];
-            if(currentNum == nextNum){
-                startIndex++;
-            } else {
-                int absNum = Math.abs(currentNum - nextNum);
-                if(absNum > 1){
-                    result = 0;
-                    break;
+            if(startIndex >= subArray.length){
+                break;
+            }
+            int n1 = subArray[startIndex];
+            int n2 = subArray[startIndex - 1];
+            if(n1 != n2){
+                if(n1 < n2){
+                    if(startIndex - 1 + l > subArray.length - 1){
+                        result = 0;
+                        break;
+                    }
+                    // 내리막
+                    for (int i = startIndex; i < startIndex + l; i++) {
+                        if(n1 != subArray[i]){
+                            result = 0;
+                            break;
+                        }
+                        visitArray[i] = true;
+                    }
+                    startIndex += l;
+                } else if(n1 > n2){
+                    if(startIndex - l < 0){
+                        result = 0;
+                        break;
+                    }
+                    // 오르막
+                    for (int i = startIndex - 1; i > startIndex - 1 - l; i--) {
+                        if(visitArray[i]){
+                            result = 0;
+                            break;
+                        }
+                        if(n2 != subArray[i]){
+                            result = 0;
+                            break;
+                        }
+                        visitArray[i] = true;
+                    }
+                    startIndex++;
                 }
-                
+            } else {
+                startIndex++;
+            }
+            if(result == 0){
+                break;
             }
         }
         return result;
