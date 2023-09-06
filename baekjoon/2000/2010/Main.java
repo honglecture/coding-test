@@ -1,0 +1,29 @@
+// https://www.acmicpc.net/problem/2010
+// 조합 0의 개수
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        int size = Integer.parseInt(bf.readLine());
+        int sum = 0;
+        for (int i = 0; i < size; i++) {
+            if(i == size - 1){
+                sum += Integer.parseInt(bf.readLine());
+            } else {
+                sum += Integer.parseInt(bf.readLine()) - 1;
+            }
+            
+        }
+        bw.write(sum + "\n");
+        bw.flush();
+        bw.close();
+    }
+
+
+}
