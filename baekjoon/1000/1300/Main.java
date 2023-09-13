@@ -5,7 +5,6 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.PriorityQueue;
 import java.util.Queue;
@@ -27,11 +26,19 @@ public class Main {
         for (int i = 0; i < n1; i++) {
             for (int j = 0; j < n1; j++) {
                 queue.add((i + 1) * (j + 1));
+                System.out.print((i + 1) * (j + 1) + " ");
             }
+            System.out.println();
         }
         while(queue.size() != 0){
-            bw.write(queue.poll() + " ");
+            if(index == n2){
+                answer = queue.poll();
+                break;
+            }
+            queue.poll();
+            index++;
         }
+        bw.write(answer + "\n");
         bw.flush();
         bw.close();
     }

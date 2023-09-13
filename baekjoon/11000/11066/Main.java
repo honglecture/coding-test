@@ -3,6 +3,7 @@
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 public class Main {
     public static void main(String[] args) throws IOException {
@@ -26,6 +27,7 @@ public class Main {
     private static int getAnswer(int[] array){
         int result = 0;
         List<Integer> list = new ArrayList<>();
+        Arrays.sort(array);
         for (int i = 0; i < array.length; i++) {
             list.add(array[i]);
         }
@@ -33,19 +35,14 @@ public class Main {
             if(list.size() == 1){
                 break;
             }
-            List<Integer> innerList = new ArrayList<>();
-            int size = list.size();
-            if(list.size() % 2 != 0){
-                size = list.size() - 1;
-            }
-            for (int i = 0; i < size; i+=2) {
-                innerList.add(list.get(i) + list.get(i + 1));
-                result += list.get(i) + list.get(i + 1);
-            }
-            if(list.size() % 2 != 0){
-                innerList.add(list.get(list.size() - 1));
-            }
-            list = new ArrayList<>(innerList);
+            int n1 = list.get(0);
+            int n2 = list.get(1);
+            list.remove(0);
+            list.remove(0);
+            result += n1;
+            result += n2;
+            list.add(n1 + n2);
+            Collections.sort(list);
             System.out.println(list);
         }
         return result;
