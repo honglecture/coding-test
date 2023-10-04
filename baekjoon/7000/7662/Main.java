@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Queue;
 
@@ -28,6 +30,7 @@ public class Main {
                     return (int) o1 - (int) o2;
                 }
             });
+            Map<Integer, Integer> map = new HashMap<>();
             for (int j = 0; j < size; j++) {
                 String[] sArray = bf.readLine().split(" ");
                 String type = sArray[0];
@@ -35,6 +38,11 @@ public class Main {
                 if(type.equals("I")){
                     maxQueue.add(n);
                     minQueue.add(n);
+                    if(map.get(n) == null){
+                        map.put(n, 1);
+                    } else {
+                        map.put(n, map.get(n) + 1);
+                    }
                 } else {
                     if(n == 1){
                         if(!maxQueue.isEmpty()){
