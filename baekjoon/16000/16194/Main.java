@@ -9,27 +9,21 @@ public class Main {
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         int n = Integer.parseInt(bf.readLine());
         int[] array = new int[n + 1];
+        int[] dp = new int[n + 1];
         String[] sArray = bf.readLine().split(" ");
-        int answer = Integer.MAX_VALUE;
         for (int i = 0; i < sArray.length; i++) {
             array[i + 1] = Integer.parseInt(sArray[i]);
+            dp[i + 1] = Integer.MAX_VALUE;
         }
         for (int i = 1; i < array.length; i++) {
-            int m = array[i];
-            int sum = 0;
-            if(n % i == 0){
-                sum = (n / i) * m;
-            } else {
-                sum = (n / i) * m;
-                sum += array[n % i];
-            }
-            if(answer > sum){
-                answer = sum;
+            for (int j = 1; j <= i; j++) {
+                dp[i] = Integer.min(dp[i], array[j] + dp[i - j]);
             }
         }
-        bw.write(answer + "\n");
+        System.out.println(dp[n]);
         bw.flush();
         bw.close();
     }
 
 }
+
