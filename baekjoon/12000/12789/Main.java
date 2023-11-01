@@ -1,13 +1,8 @@
-// https://www.acmicpc.net/problem/2437
-// 저울
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.util.Arrays;
-
+// https://www.acmicpc.net/problem/12789
+import java.io.*;
+import java.util.Stack;
 public class Main {
+    
     public static void main(String[] args) throws IOException {
         BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
@@ -17,17 +12,30 @@ public class Main {
         for (int i = 0; i < array.length; i++) {
             array[i] = Integer.parseInt(sArray[i]);
         }
-        Arrays.sort(array);
-        int sum = 0;
+        Stack<Integer> stack = new Stack<>();
+        int nextNum = 1;
         for (int i = 0; i < array.length; i++) {
             int n = array[i];
-            if(sum + 1 < n){
-                break;
+            stack.add(n);
+            while(true){
+                if(stack.isEmpty()){
+                    break;
+                }
+                if(stack.peek() == nextNum){
+                    stack.pop();
+                    nextNum++;
+                } else {
+                    break;
+                }
             }
-            sum += n;
         }
-        System.out.println(sum + 1);
+        if(stack.isEmpty()){
+            bw.write("Nice\n");
+        } else {
+            bw.write("Sad\n");
+        }
         bw.flush();
         bw.close();
     }
+
 }

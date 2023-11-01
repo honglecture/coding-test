@@ -14,16 +14,16 @@ public class Main {
         String s = "";
         while((s = bf.readLine()) != null && !s.isEmpty()){
             BigInteger b1 = new BigInteger(s);
-            String s2 = "1";
+            StringBuilder s2 = new StringBuilder("1");
             int count = 1;
             while(true){
-                BigInteger b2 = new BigInteger(s2);
+                BigInteger b2 = new BigInteger(s2.toString());
                 BigInteger result = b2.mod(b1);
                 if(result.toString().equals("0")){
                     break;
                 }
                 count++;
-                s2 += "1";
+                s2.append("1");
             }
             bw.write(count + "\n");
             s = null;
