@@ -1,16 +1,14 @@
-// https://www.acmicpc.net/problem/9205
-// 맥주 마시면서 걸어가기
+// https://www.acmicpc.net/problem/10994
+// 별 찍기 - 19
 import java.io.*;
 public class Main {
-
+    
     public static void main(String[] args) throws IOException {
         BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-        int testCase = Integer.parseInt(bf.readLine());
-        for (int i = 0; i < testCase; i++) {
-            int size = Integer.parseInt(bf.readLine());
-            
-        }
+        int size = Integer.parseInt(bf.readLine()) * 4 - 3;
+        String[][] array = new String[size][size];
+        
         bw.flush();
         bw.close();
     }

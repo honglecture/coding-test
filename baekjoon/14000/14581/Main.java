@@ -1,18 +1,18 @@
-// https://www.acmicpc.net/problem/9205
-// 맥주 마시면서 걸어가기
+// https://www.acmicpc.net/problem/14581
+// 팬들에게 둘러싸인 홍준
 import java.io.*;
 public class Main {
 
     public static void main(String[] args) throws IOException {
         BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-        int testCase = Integer.parseInt(bf.readLine());
-        for (int i = 0; i < testCase; i++) {
-            int size = Integer.parseInt(bf.readLine());
-            
-        }
+        String str = bf.readLine();
+        System.out.println(":fan::fan::fan:");
+        System.out.println(":fan::"+str+"::fan:");
+        System.out.println(":fan::fan::fan:");
         bw.flush();
         bw.close();
     }
 
+    
 }
