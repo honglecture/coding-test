@@ -5,9 +5,14 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.util.ArrayDeque;
+import java.util.Comparator;
+import java.util.PriorityQueue;
+import java.util.Queue;
 
 public class Main {
 
+    private static boolean[][] visitArray;
     private static int[][] dp;
     private static int[][] array;
 
@@ -17,21 +22,28 @@ public class Main {
         int size = Integer.parseInt(bf.readLine());
         array = new int[size][size];
         dp = new int[size][size];
+        visitArray = new boolean[size][size];
         int answer = 0;
+        Queue<int[]> queue = new ArrayDeque<>();
         for (int i = 0; i < array.length; i++) {
             String[] sArray = bf.readLine().split(" ");
             for (int j = 0; j < sArray.length; j++) {
                 array[i][j] = Integer.parseInt(sArray[j]);
-                dp[i][j] = -1;
+                queue.add(new int[]{array[i][j], i, j});
             }
         }
-        for (int i = 0; i < array.length; i++) {
-            for (int j = 0; j < array.length; j++) {
-                if(dp[i][j] != -1)
+        while (queue.size() != 0) {
+            int[] pollArray = queue.poll();
+            int n1 = pollArray[1];
+            int n2 = pollArray[2];
+            if(visitArray[n1][n2]){
                 continue;
-                getAnswer(i, j, 0);
             }
+            int result = getAnswer(n1, n2);
+            dp[n1][n2] = result;
+            visitArray[n1][n2] = true;
         }
+
         for (int i = 0; i < array.length; i++) {
             for (int j = 0; j < array.length; j++) {
                 if(dp[i][j] > answer){
@@ -45,26 +57,41 @@ public class Main {
         bw.close();
     }
 
-    private static void getAnswer(int startY, int startX, int count){
+    private static int getAnswer(int startY, int startX){
         int[] array1 = {-1, 0, 1, 0};
         int[] array2 = {0, 1, 0, -1};
-        int startN = array[startY][startX];
-        if(dp[startY][startX] >= count){
-            return;
-        }
-        
-        dp[startY][startX] = count;
-        for (int i = 0; i < array1.length; i++) {
-            int nextY = startY + array1[i];
-            int nextX = startX + array2[i];
-            if(nextY < 0 || nextX < 0 || nextY > array.length - 1 || nextX > array.length - 1){
+        int max = Integer.MIN_VALUE;
+        Queue<int[]> queue = new ArrayDeque<>();
+        queue.add(new int[]{startY, startX, 0});
+        while (queue.size() != 0) {
+            int[] pollArray = queue.poll();
+            int y = pollArray[0];
+            int x = pollArray[1];
+            int count = pollArray[2];
+            int sum = count + dp[y][x];
+            if(max < sum){
+                max = sum;
+            }
+            if(visitArray[y][x] || dp[y][x] != 0){
                 continue;
             }
-            if(array[nextY][nextX] <= startN){
-                continue;
+            boolean flag = false;
+            for (int i = 0; i < array1.length; i++) {
+                int nextY = y + array1[i];
+                int nextX = x + array2[i];
+                if(nextY < 0 || nextX < 0 || nextY > array.length - 1 || nextX > array[0].length - 1){
+                    continue;
+                }
+                if(array[y][x] >= array[nextY][nextX]){
+                    continue;
+                }
+                queue.add(new int[]{nextY, nextX, count + 1});
+                flag = true;
             }
-            getAnswer(nextY, nextX, count + 1);
+            if(!flag)
+                visitArray[y][x] = true;
         }
+        return max;
     }
 
 
