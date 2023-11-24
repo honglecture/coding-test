@@ -23,6 +23,15 @@ public class Main {
         array[2] = 3;
         visitArray = new int[size];
         answerArray = new int[size];
+        for (int i = 0; i < visitArray.length; i++) {
+            visitArray[i] = 1;
+        }
+        getAnswer(0, 0);
+        String answer = "";
+        for (int i = 0; i < answerArray.length; i++) {
+            answer += answerArray[i];
+        }
+        bw.write(answer + "\n");
         bw.flush();
         bw.close();
     }
@@ -32,8 +41,11 @@ public class Main {
         if(flag){
             return;
         }
-        if(count == array.length){
-            if(checkAnswer()){
+        if(!checkAnswer(count)){
+            return;
+        }
+        if(count == visitArray.length){
+            if(checkAnswer(count)){
                 for (int i = 0; i < answerArray.length; i++) {
                     answerArray[i] = visitArray[i];
                 }
@@ -42,18 +54,33 @@ public class Main {
             return;
         }
         for (int i = 0; i < array.length; i++) {
-            array[index] = array[i];
+            visitArray[index] = array[i];
             getAnswer(index + 1, count + 1);
+            
         }
     }
-
-
-    private static boolean checkAnswer(){
+    private static boolean checkAnswer(int count){
         boolean result = true;
-        int length = 1;
-        
-        
-
+        String str = "";
+        for (int i = 0; i < count; i++) {
+            str += visitArray[i];
+        }
+        for (int i = 0; i < str.length(); i++) {
+            for (int j = 0; j < str.length(); j++) {
+                if(j + i + 1 > str.length() || j + i + 2 + i > str.length()){
+                    break;
+                }
+                String str1 = str.substring(j, j + i + 1);
+                String str2 = str.substring(j + i + 1, j + i + 2 + i);
+                if(str1.equals(str2)){
+                    result = false;
+                    break;
+                }
+            }
+            if(!result){
+                break;
+            }
+        }
         return result;
     }
    
