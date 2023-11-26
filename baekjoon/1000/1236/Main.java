@@ -1,6 +1,8 @@
 // https://www.acmicpc.net/problem/1236
 // 성 지키기
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 public class Main {
 
     public static void main(String[] args) throws IOException {
@@ -17,9 +19,8 @@ public class Main {
                 array[i][j] = sArray[j];
             }
         }
+        List<Integer> list = new ArrayList<>();
         for (int i = 0; i < array.length; i++) {
-            int checkY = -1;
-            int checkX = -1;
             boolean flag = false;
             for (int j = 0; j < array[i].length; j++) {
                 if(array[i][j].equals("X")){
@@ -27,33 +28,29 @@ public class Main {
                     break;
                 }
             }
-            if(flag){
-                continue;
+            if(!flag){
+                list.add(i);
             }
-            
-            for (int j = 0; j < array[i].length; j++) {
-                boolean checkFlag = false;
-                for (int k = i; k < array.length; k++) {
-                    if(array[k][j].equals("X")){
-                        checkFlag = true;
-                        break;
-                    }
-                }
-                if(!checkFlag){
-                    checkY = i;
-                    checkX = j;
+        }
+        answer += list.size();
+        for (int i = 0; i < array[0].length; i++) {
+            boolean flag = false;
+            for (int j = 0; j < array.length; j++) {
+                if(array[j][i].equals("X")){
+                    flag = true;
                     break;
                 }
             }
-            if(checkY == -1){
-                array[i][0] = "X";
-            } else {
-                array[checkY][checkX] = "X";
+            if(!flag){
+                if(list.size() != 0){
+                    list.remove(0);
+                    continue;
+                } else {
+                    answer++;
+                }
             }
-            
-            answer += 1;
         }
-        bw.write(answer + "\n");
+        System.out.println(answer);
         bw.flush();
         bw.close();
     }
