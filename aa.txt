@@ -1,16 +1,4 @@
-// https://www.acmicpc.net/problem/24900
-// 한별 찍기
-import java.io.*;
-import java.util.ArrayDeque;
-import java.util.Deque;
-import java.util.Queue;
-
-public class Main {
-
-    public static void main(String[] args) throws IOException {
-        BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-        System.out.println("                                                           :8DDDDDDDDDDDDDD$.                                           ");
+System.out.println("                                                           :8DDDDDDDDDDDDDD$.                                           ");
 System.out.println("                                                      DDDNNN8~~~~~~~~~~=~7DNNDNDDDNNI                                   ");
 System.out.println("                                                  ?NNDD=~=~~~~~~~~~~~~~~~~~=~~==~=INNDNN7                               ");
 System.out.println("                                               +NDDI~~~~~~~~~~~~~~~~~~~~~~~=~~========~ODND+                            ");
@@ -74,10 +62,3 @@ System.out.println("                                          .DND=~~~~=::~~=NN.
 System.out.println("                                             8DNNI=.~~~~=NDDNNNNDDNDNN.~~~~~IDDNDND7:.                                  ");
 System.out.println("                                                ?DNNDD?~DD          ~NN~~=NDD$                                          ");
 System.out.println("                                                     :DDD.            NNNN=                                             ");
-        bw.flush();
-        bw.close();
-    }
-
-    
-
-}
