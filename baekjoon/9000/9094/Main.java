@@ -11,12 +11,18 @@ public class Main {
             int n = Integer.parseInt(sArray[0]);
             int m = Integer.parseInt(sArray[1]);
             int count = 0;
-            for (int j = 0; j < n - 1; j++) {
+            for (int j = 1; j < n - 1; j++) {
                 for (int k = j + 1; k < n; k++) {
-                    int a = j;
-                    int b = k;
+                    int n1 = j;
+                    int n2 = k;
+                    int result1 = (n1 * n1) + (n2 * n2) + m;
+                    int result2 = n1 * n2;
+                    if(result1 % result2 == 0){
+                        count++;
+                    }
                 }
             }
+            bw.write(count + "\n");
         }
         bw.flush();
         bw.close();
