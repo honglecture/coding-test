@@ -1,85 +1,72 @@
 // https://www.acmicpc.net/problem/16938
 // 캠프 준비
 import java.io.*;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 public class Main {
 
     private static int left;
     private static int right;
-    private static int x;
+    private static int key;
     private static int[] array;
     private static boolean[] visitArray;
+    private static Set<String> set = new HashSet<>();
     private static int answer = 0;
 
     public static void main(String[] args) throws IOException {
         BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         String[] sArray = bf.readLine().split(" ");
+        int size = Integer.parseInt(sArray[0]);
         left = Integer.parseInt(sArray[1]);
         right = Integer.parseInt(sArray[2]);
-        x = Integer.parseInt(sArray[3]);
+        key = Integer.parseInt(sArray[3]);
+        array = new int[size];
+        visitArray = new boolean[size];
         sArray = bf.readLine().split(" ");
-        List<Integer> list = new ArrayList<>();
-        for (int i = 0; i < sArray.length; i++) {
-            int n = Integer.parseInt(sArray[i]);
-            if(n > right){
-                continue;
-            }
-            list.add(n);
-        }
-        array = new int[list.size()];
-        for (int i = 0; i < list.size(); i++) {
-            array[i] = list.get(i);
+        for (int i = 0; i < array.length; i++) {
+            array[i] = Integer.parseInt(sArray[i]);
         }
         Arrays.sort(array);
-        visitArray = new boolean[array.length];
-        getAnswer(0, 0, 0);
-        System.out.println(answer);
+        getAnswer(0, 0, 0, 0);
+        answer = set.size();
+        bw.write(answer + "\n");
         bw.flush();
         bw.close();
     }
 
-    private static void getAnswer(int index, int count, int sum){
-        if(index == array.length){
+    private static void getAnswer(int sum, int firstNum, int lastNum, int count){
+        if(count >= array.length){
             return;
         }
         if(sum > right){
             return;
         }
-        if(index > 0){
-            int min = Integer.MAX_VALUE;
-            int max = Integer.MIN_VALUE;
-            for (int i = 0; i < visitArray.length; i++) {
-                if(visitArray[i]){
-                    if(min > array[i]){
-                        min = array[i];
-                    }
-                    if(max < array[i]){
-                        max = array[i];
-                    }
-                }
-            }
-            System.out.println(min + " " + max);
-            if(max - min > x){
-                return;
-            }
-            if(sum >= left && sum <= right){
+        if(sum >= left && sum <= right && count > 1){
+            if(lastNum - firstNum >= key){
+                StringBuilder sb = new StringBuilder();
                 for (int i = 0; i < visitArray.length; i++) {
-                    System.out.print(visitArray[i] + " ");
+                    if(visitArray[i]){
+                        sb.append(i + " ");
+                    }
                 }
-                System.out.println();
-                answer++;
+                set.add(sb.toString());
             }
         }
-        for (int i = index; i < visitArray.length; i++) {
+        for (int i = count; i < array.length; i++) {
             if(!visitArray[i]){
-                visitArray[i] = true;
-                getAnswer(index + 1, count + 1, sum + array[i]);
-                visitArray[i] = false;
+                if(firstNum != 0){
+                    visitArray[i] = true;
+                    getAnswer(sum + array[i], firstNum, array[i], count + 1);
+                    visitArray[i] = false;
+                } else {
+                    visitArray[i] = true;
+                    getAnswer(array[i], array[i], array[i], count + 1);
+                    visitArray[i] = false;
+                }
             }
         }
     }
-    
+
 }
