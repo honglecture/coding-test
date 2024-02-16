@@ -12,15 +12,37 @@ public class Main {
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         int size = Integer.parseInt(bf.readLine());
         for (int i = 0; i < size; i++) {
-            double n = Integer.parseInt(bf.readLine());
-            String answer = "";
-            while (true) {
-                n = n / 10;
-                answer = "0" + answer;
-            }
+            int n = Integer.parseInt(bf.readLine());
+            int result = getAnswer(n);
+            bw.write(result + "\n");           
         }
         bw.flush();
         bw.close();
+    }
+
+    private static int getAnswer(int n){
+        int result = 0;
+        String str = n + "";
+        String answer = "";
+        while (true) {
+            if(str.length() == 1){
+                break;
+            }
+            String s1 = str.substring(0, str.length() - 1);
+            String s2 = String.valueOf(str.charAt(str.length() - 1));
+            int n1 = Integer.parseInt(s1);
+            int n2 = Integer.parseInt(s2);
+            if(n2 < 5){
+                answer += "0";
+            } else {
+                n1 += 1;
+                answer += "0";
+            }
+            str = n1 + "";
+        }
+        answer = str + answer;
+        result = Integer.parseInt(answer);
+        return result;
     }
 
     
