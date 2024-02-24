@@ -1,5 +1,5 @@
-// https://www.acmicpc.net/problem/30045
-// ZOAC 6
+// https://www.acmicpc.net/problem/18005
+// Even or Odd?
 import java.io.*;
 
 public class Main {
@@ -7,19 +7,18 @@ public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-        int size = Integer.parseInt(bf.readLine());
-        int answer = 0;
-        for (int i = 0; i < size; i++) {
-            String str = bf.readLine();
-            if(str.contains("OI") || str.contains("01")){
-                answer++;
+        int n = Integer.parseInt(bf.readLine());
+        if(n % 2 == 1){
+            System.out.println("0");
+        } else {
+            if((n / 2) % 2 == 0){
+                System.out.println("2");
+            } else {
+                System.out.println("1");
             }
         }
-        System.out.println(answer);
         bw.flush();
         bw.close();
     }
-
-    
 
 }

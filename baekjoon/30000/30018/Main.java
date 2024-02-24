@@ -1,5 +1,5 @@
-// https://www.acmicpc.net/problem/30045
-// ZOAC 6
+// https://www.acmicpc.net/problem/30018
+// 타슈
 import java.io.*;
 
 public class Main {
@@ -8,11 +8,14 @@ public class Main {
         BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         int size = Integer.parseInt(bf.readLine());
+        String[] sArray1 = bf.readLine().split(" ");
+        String[] sArray2 = bf.readLine().split(" ");
         int answer = 0;
-        for (int i = 0; i < size; i++) {
-            String str = bf.readLine();
-            if(str.contains("OI") || str.contains("01")){
-                answer++;
+        for (int i = 0; i < sArray2.length; i++) {
+            int n1 = Integer.parseInt(sArray1[i]);
+            int n2 = Integer.parseInt(sArray2[i]);
+            if(n1 > n2){
+                answer += n1 - n2;
             }
         }
         System.out.println(answer);
