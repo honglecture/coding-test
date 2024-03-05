@@ -1,0 +1,28 @@
+// https://www.acmicpc.net/problem/21591
+// Laptop Sticker
+import java.io.*;
+
+public class Main {
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        String[] sArray = bf.readLine().split(" ");
+        int n1 = Integer.parseInt(sArray[0]);
+        int n2 = Integer.parseInt(sArray[1]);
+        int n3 = Integer.parseInt(sArray[2]);
+        int n4 = Integer.parseInt(sArray[3]);
+        if(n1 - 2 >= n3){
+            if(n2 - 2 >= n4){
+                System.out.println("1");
+            } else {
+                System.out.println("0");
+            }
+        } else {
+            System.out.println("0");
+        }
+        bw.flush();
+        bw.close();
+    }
+
+}
