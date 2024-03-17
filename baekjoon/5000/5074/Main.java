@@ -23,10 +23,15 @@ public class Main {
             }
             int sum1 = (h1 * 60) + m1;
             int sum2 = (h2 * 60) + m2;
-            int result = sum1 + sum2;
-            int currentH = 0;
-            int currentM = 0;
-            int day = 0;
+            int result1 = sum1 + sum2;
+            int result2 = result1 % (24 * 60);
+            int currentH = result2 / 60;
+            int currentM = result2 % 60;
+            int day = result1 / (24 * 60);
+            String strH = String.valueOf(currentH).length() == 1 ? "0" + currentH : String.valueOf(currentH);
+            String strM = String.valueOf(currentM).length() == 1 ? "0" + currentM : String.valueOf(currentM);
+            String strD = day != 0 ? "+" + day : "";
+            bw.write(strH + ":" + strM + " " +strD +"\n");
         }
         bw.flush();
         bw.close();
