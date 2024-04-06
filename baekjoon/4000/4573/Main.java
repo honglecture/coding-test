@@ -21,7 +21,6 @@ public class Main {
                 String[] sArray = bf.readLine().split(" ");
                 int n1 = Integer.parseInt(sArray[0]);
                 int n2 = Integer.parseInt(sArray[1]);
-                double result = 
             }
         }
         bw.flush();
