@@ -7,6 +7,7 @@ public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        boolean flag = true;
         while (true) {
             int size = Integer.parseInt(bf.readLine());
             if(size == 0){break;}
@@ -16,15 +17,16 @@ public class Main {
             for (int i = 0; i < sArray.length; i++) {
                 array[i] = Integer.parseInt(sArray[i]);
             }
-            int maxNum = -1;
-            for (int i = 0; i < array.length; i++) {
+            for (int i = 1; i < array.length; i++) {
                 int n = array[i];
-                if(maxNum == -1){
-                    maxNum = n;
-                } else {
-                    if(maxNum < n){
+                int beforeNum = array[i - 1];
+                if(beforeNum > n){
+                    if(flag){
                         answer++;
+                        flag = false;
                     }
+                } else {
+                    flag = true;
                 }
             }
             bw.write(answer + "\n");
