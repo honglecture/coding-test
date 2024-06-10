@@ -17,12 +17,22 @@ public class Main {
             int start = 1;
             int end = 50;
             while (true) {
-                int temp = (end + start) - 1;
+                int temp = end + start;
                 int mid = temp / 2;
                 if(temp % 2 == 0){
-                    
+                    mid = temp / 2;
+                } else {
+                    mid = (temp - 1) / 2;
                 }
-                break;
+                list.add(mid);
+                if(mid == n){
+                    break;
+                }
+                if(mid < n){
+                    start = mid + 1;
+                } else {
+                    end = mid - 1;
+                }
             }
             for (int i = 0; i < list.size(); i++) {
                 bw.write(list.get(i) + " ");
