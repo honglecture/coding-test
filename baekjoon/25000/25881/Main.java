@@ -1,7 +1,6 @@
 // https://www.acmicpc.net/problem/25881
 // Electric Bill
 import java.io.*;
-import java.util.Arrays;
 
 public class Main {
 
