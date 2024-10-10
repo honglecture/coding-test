@@ -11,7 +11,12 @@ public class Main {
         int n = Integer.parseInt(sArray[0]);
         int m = Integer.parseInt(sArray[1]);
         int k = Integer.parseInt(sArray[2]);
-        int sum = m * k;
+        int answer = m * k;
+    
+
+        int n1 = n - k;
+        answer += n1 / m;
+        System.out.println(answer);
         bw.flush();
         bw.close();
     }

@@ -10,10 +10,26 @@ public class Main {
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         int size = Integer.parseInt(bf.readLine());
         for (int i = 0; i < size; i++) {
-            String temp = bf.readLine();
-            String str = getString(temp);
-            int result = getAnswer(str);
-            bw.write(result + "\n");
+            String str = getString(bf.readLine());
+            
+            int answer = Integer.MAX_VALUE;
+            for (int j = 0; j < str.length(); j++) {
+                int count = 0;
+                Set<String> set = new HashSet<>();
+                for (int k = j; k < str.length(); k++) {
+                    count++;
+                    String s = String.valueOf(str.charAt(k));
+                    set.add(s);
+                    if(count >= 6 && set.size() == 3){
+                        answer = Integer.min(answer, count);
+                        break;
+                    }
+                }
+            }
+            if(answer == Integer.MAX_VALUE){
+                answer = 0;
+            }
+            bw.write(answer + "\n");
         }
         bw.flush();
         bw.close();
@@ -33,43 +49,4 @@ public class Main {
         }
         return result;
     }
-
-    private static int getAnswer(String str){
-        int result = Integer.MAX_VALUE;
-        for (int i = 0; i < str.length(); i++) {
-            Set<String> set = new HashSet<>();
-            int count = 0;
-            boolean flag = false;
-            for (int j = i; j < str.length() - 1; j++) {
-                String s1 = String.valueOf(str.charAt(j));
-                String s2 = String.valueOf(str.charAt(j + 1));
-                if(set.size() < 2){
-                    set.add(s1);
-                    count++;
-                    continue;
-                }
-                if(!s1.equals(s2)){
-                    count++;
-                    flag = true;
-                    break;
-                } else if(j == str.length() - 2){
-                    count += 2;
-                    flag = true;
-                    break;
-                } else {
-                    count++;
-                }
-            }
-            if(flag){
-                result = Integer.min(count, result);
-            }
-        }
-        if(result == Integer.MAX_VALUE){
-            result = 0;
-        }
-        
-        return result;
-    }
-
-
 }
